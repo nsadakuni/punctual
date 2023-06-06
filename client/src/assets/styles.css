@@ -1,0 +1,12 @@
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+.meeting {
+  display: flex;
+}
+
+.pastMeeting {
+  color: grey;
+}
