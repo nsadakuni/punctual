@@ -66,18 +66,18 @@ const App = () => {
 
   return (
     <div className='bg-gray-100'>
-      <nav className="grid grid-cols-2 bg-gray-800 text-white px-4 lg:px-6 py-2.5">
+      <nav className="grid grid-cols-2 bg-gray-800 text-white px-4 lg:px-6 py-6">
         <h1 className={`flex self-center justify-self-start font-bold text-6xl ${status && 'animate-pulse'}`}>
-          <img className='self-center object-scale-down h-16 w-16 animate-pulse' src='logo.png'/>
+          <img className='self-center object-scale-down h-16 w-16' src='logo.png'/>
           punctual.
         </h1>
-        <button className='flex items-center justify-self-end self-center border rounded w-auto h-8 p-2'>Sign in</button>
+        <button className='flex items-center justify-self-start self-center border rounded w-auto h-8 p-2'>Sign in</button>
       </nav>
       <div className='grid grid-cols-2'>
-        <div className='flex-col m-2'>
-          <button disabled={status} className={`text-white font-bold py-2 px-4 rounded mr-2 ${status ? 'bg-blue-200': 'bg-blue-500 hover:bg-blue-700'}`} onClick={() => document.getElementById('addDialog').showModal()}>Add a new meeting</button>
-          <button disabled={status} className={`w-1/6 text-white font-bold py-2 px-4 rounded mr-2 ${status ? 'bg-green-200' : 'bg-green-500 hover:bg-green-700'}`} onClick={goBtn}>Go</button>
-          <button disabled={!status} className={`w-1/6 text-white font-bold py-2 px-4 rounded ${status ? 'bg-red-500 hover:bg-red-700' : 'bg-red-200'}`} onClick={stopBtn}>Stop</button>
+        <div className='flex-col m-5'>
+          <button disabled={status} className={`drop-shadow-lg text-white font-bold py-2 px-4 rounded mr-2 ${status ? 'bg-blue-200': 'bg-blue-500 hover:bg-blue-700'}`} onClick={() => document.getElementById('addDialog').showModal()}>Add a new meeting</button>
+          <button disabled={status} className={`drop-shadow-lg w-1/6 text-white font-bold py-2 px-4 rounded mr-2 ${status ? 'bg-green-200' : 'bg-green-500 hover:bg-green-700'}`} onClick={goBtn}>Go</button>
+          <button disabled={!status} className={`drop-shadow-lg w-1/6 text-white font-bold py-2 px-4 rounded ${status ? 'bg-red-500 hover:bg-red-700' : 'bg-red-200'}`} onClick={stopBtn}>Stop</button>
           <div className='pt-1 pb-2'>
             <input className='text-gray-700 border-2 text-sm rounded p-2 w-1/3' type='number' min='0' placeholder='#minutes before auto-join' onChange={(e) => setTminus(e.target.value*60000)}/>
             <input className='text-gray-700 border-2 text-sm rounded p-2 w-1/3' type='number' min='0' placeholder='#minutes before notification' onChange={(e) => setChimeTime(e.target.value*60000)}/>
@@ -85,12 +85,12 @@ const App = () => {
           <List meetings={meetings} deleteBtn={deleteBtn}/>
           <Add setMeetings={setMeetings}/>
         </div>
-        <div className='justify-self-end pr-10 pt-10 fixed'>
-          <Clock meetings={meetings} setMeetings={setMeetings}/>
+        <div className='fixed top-3 right-3 bg-gray-800 text-white rounded-md p-2 drop-shadow-2xl'>
+          <Clock meetings={meetings} setMeetings={setMeetings} chimeTime={chimeTime}/>
         </div>
       </div>
       <footer className="bg-gray-900">
-      <div className="w-full p-10 mt-10"></div>
+      <div className="w-full p-20 mt-10"></div>
       </footer>
     </div>
   )

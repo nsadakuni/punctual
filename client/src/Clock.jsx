@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import helpers from './helpers.jsx';
 
-const Clock = ({ meetings, setMeetings }) => {
+const Clock = ({ meetings, setMeetings, chimeTime }) => {
   const [count, setCount] = useState(0);
   const [nextUp, setNextUp] = useState({})
 
@@ -37,9 +37,14 @@ const Clock = ({ meetings, setMeetings }) => {
   return (
     <div>
       {count === null ? <div>No upcoming meetings</div> :
-        <div>
-          <div className='text-4xl'>Next meeting in {format(count)}</div>
-          <div className='text-xl'>{nextUp && nextUp.title}</div>
+        <div className='grid grid-cols-2 gap-5'>
+          <div className='flex-col'>
+            <div className='text-4xl'>Next meeting</div>
+            <div className='text-xl break-all'>{nextUp && nextUp.title}</div>
+          </div>
+          <div className={`text-4xl self-center ${chimeTime > count && 'text-red-500'}`} style={{ justifySelf: 'center' }}>
+          {format(count)}
+          </div>
         </div>}
     </div>
   );

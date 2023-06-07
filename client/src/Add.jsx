@@ -24,7 +24,7 @@ const Add = ({setMeetings}) => {
 
   return (
     <dialog id='addDialog' className='w-1/3 p-0 shadow-2xl'>
-      <form id='addForm' className='grid grid-cols-2 gap-y-4 rounded bg-gray-800 text-white p-4' onSubmit={(e) => submit(e)}>
+      <form id='addForm' className='grid grid-cols-2 gap-y-4 rounded-md bg-gray-800 text-white p-4' onSubmit={(e) => submit(e)}>
         <div className='grid col-span-2'>
           <label htmlFor='meeting-name'>Meeting Name</label>
           <input id='meeting-name' className='border border-gray-600 bg-gray-800 text-white rounded' type='text' placeholder='Example: Morning stand-up'/>

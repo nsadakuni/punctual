@@ -13,11 +13,11 @@ const Meeting = ({meeting, deleteBtn}) => {
   }).toString();
 
   return (
-    <div className={`grid grid-cols-3 gap-2  ${meeting.past && 'text-gray-400'}`}>
-      <div className='font-semibold col-span-1'>
+    <div className={`grid grid-cols-3 gap-2`}>
+      <div className={`font-semibold col-span-1 ${meeting.past && 'text-gray-400'}`}>
         &#x2022; {meeting.title}
       </div>
-      <div className='pl-10'>
+      <div className={`pl-10 ${meeting.past && 'text-gray-400'}`}>
         {startTime} - {endTime}
       </div>
       <button className='flex items-center justify-self-end h-6 w-20 m-1 text-sm bg-transparent hover:bg-red-500 text-black-500 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded' onClick={() => deleteBtn(meeting._id)}>Delete</button>
