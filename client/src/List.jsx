@@ -1,7 +1,7 @@
 import React from 'react';
 import Meeting from './Meeting.jsx';
 
-const List = ({meetings, deleteBtn}) => {
+const List = ({meetings, setMeetings, form, setForm}) => {
   let prev = null;
 
   return (
@@ -13,7 +13,7 @@ const List = ({meetings, deleteBtn}) => {
         return (
           <React.Fragment key={meeting._id}>
             {newDay && <div className='font-bold text-2xl pt-3 mt-3 border-t-2'>{curr}</div>}
-            <Meeting meeting={meeting} deleteBtn={deleteBtn}/>
+            <Meeting meeting={meeting} setMeetings={setMeetings} form={form} setForm={setForm}/>
           </React.Fragment>
         )
       })}

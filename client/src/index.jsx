@@ -12,6 +12,7 @@ const App = () => {
   const [tminus, setTminus] = useState(60000);
   const [chimeTime, setChimeTime] = useState(60000);
   const [status, setStatus] = useState(false)
+  const [form, setForm] = useState({});
 
   let queue = useRef([]);
   let chime = new Audio('chime.mp3')
@@ -57,19 +58,12 @@ const App = () => {
     queue.current = [];
   }
 
-  const deleteBtn = (meeting) => {
-    axios
-      .delete('/meetings', {data: {meeting}})
-      .then(() => helpers.getAll(setMeetings))
-      .catch(err => console.error('Could not delete meeting:', err))
-  }
-
   return (
     <div className='bg-gray-100'>
       <nav className="grid grid-cols-2 bg-gray-800 text-white px-4 lg:px-6 py-6">
         <h1 className={`flex self-center justify-self-start font-bold text-6xl ${status && 'animate-pulse'}`}>
-          <img className='self-center object-scale-down h-16 w-16' src='logo.png'/>
-          punctual.
+          <img className='self-center object-scale-down h-16 w-16' src='logo2.png'/>
+          nTime.
         </h1>
         <button className='flex items-center justify-self-start self-center border rounded w-auto h-8 p-2'>Sign in</button>
       </nav>
@@ -82,15 +76,17 @@ const App = () => {
             <input className='text-gray-700 border-2 text-sm rounded p-2 w-1/3' type='number' min='0' placeholder='#minutes before auto-join' onChange={(e) => setTminus(e.target.value*60000)}/>
             <input className='text-gray-700 border-2 text-sm rounded p-2 w-1/3' type='number' min='0' placeholder='#minutes before notification' onChange={(e) => setChimeTime(e.target.value*60000)}/>
           </div>
-          <List meetings={meetings} deleteBtn={deleteBtn}/>
-          <Add setMeetings={setMeetings}/>
+          <List meetings={meetings} setMeetings={setMeetings} form={form} setForm={setForm}/>
+          <Add setMeetings={setMeetings} form={form} setForm={setForm}/>
         </div>
         <div className='fixed top-3 right-3 bg-gray-800 text-white rounded-md p-2 drop-shadow-2xl'>
           <Clock meetings={meetings} setMeetings={setMeetings} chimeTime={chimeTime}/>
         </div>
       </div>
-      <footer className="bg-gray-900">
-      <div className="w-full p-20 mt-10"></div>
+      <footer className="mt-auto bg-gray-900 w-full">
+        <div className="p-14">
+          <a className='flex text-blue-400 hover:text-blue-800 justify-center' href="https://www.linkedin.com/in/narusadakuni/" target="_blank" rel="noopener noreferrer">&#169; Naru Sadakuni</a>
+        </div>
       </footer>
     </div>
   )
