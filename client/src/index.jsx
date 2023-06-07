@@ -1,18 +1,20 @@
+import './index.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import axios from 'axios';
 import helpers from './helpers.jsx'
 import Add from './Add.jsx';
 import List from './List.jsx';
-import './assets/styles.css';
-
 
 const App = () => {
+
   const [meetings, setMeetings] = useState([]);
   const [tminus, setTminus] = useState(60000);
+
   let queue = useRef([]);
 
   useEffect(() => helpers.getAll(setMeetings), [])
+
 
   const goBtn = () => {
     let now = Date.now();
@@ -20,43 +22,57 @@ const App = () => {
     for (let i = 0; i < meetings.length; i++) {
       ((i) => {
         queue.current.push(setTimeout(() => {
-          axios.put('/meetings', meetings[i])
+          axios
+            .put('/meetings', meetings[i])
             .then(() => helpers.getAll(setMeetings))
             .catch(err => console.error('Could not get meetings', err))
           opened[i] = (window.open(meetings[i].url));
-        }, meetings[i].time - now - tminus));
+        }, meetings[i].startTime - now - tminus));
       })(i);
 
       ((i) => {
         queue.current.push(setTimeout(() => {
           opened[i].close();
-        }, meetings[i].time - now - tminus + 2000));
+        }, meetings[i].startTime - now - tminus + 2000));
       })(i);
     }
   }
 
   const stopBtn = () => {
-    console.log('Stopping')
+    if (!queue.current.length) {
+      console.log('Nothing in queue.')
+      return;
+    }
+    console.log('Stopping', queue.current)
     for (let i = 0; i < queue.current.length; i++) {
       clearTimeout(queue.current[i]);
     }
+    queue.current = [];
   }
 
   const deleteBtn = (meeting) => {
-    axios.delete('/meetings', {data: {meeting}})
+    axios
+      .delete('/meetings', {data: {meeting}})
       .then(() => helpers.getAll(setMeetings))
       .catch(err => console.error('Could not delete meeting:', err))
   }
 
   return (
-    <div id='app'>
-      <h1>Punctual</h1>
-      <List meetings={meetings} deleteBtn={deleteBtn}/>
-      <Add setMeetings={setMeetings}/>
-      <input type='number' min='0' placeholder='Number of minutes before joining' onChange={(e) => setTminus(e.target.value*60000)}/>
-      <button onClick={() => document.getElementById('addDialog').showModal()}>Add a new meeting</button>
-      <button onClick={goBtn}>Go</button>
-      <button onClick={stopBtn}>Stop</button>
+    <div className='bg-gray-100'>
+      <nav className="grid grid-cols-2 bg-gray-800 text-white px-4 lg:px-6 py-2.5">
+        <h1 className='font-bold text-6xl'>punctual.</h1>
+        <button className='flex items-center justify-self-end self-center border rounded w-auto h-8 p-2'>Sign in</button>
+      </nav>
+      <div className='flex-col m-2'>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => document.getElementById('addDialog').showModal()}>Add a new meeting</button>
+        <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' onClick={goBtn}>Go</button>
+        <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'onClick={stopBtn}>Stop</button>
+        <div className='pt-1 pb-2 pl-1 w-5/12'>
+          <input className='text-gray-700 border-2 text-sm rounded p-2 w-5/12' type='number' min='0' placeholder='Number of minutes before auto-join' onChange={(e) => setTminus(e.target.value*60000)}/>
+        </div>
+        <List meetings={meetings} deleteBtn={deleteBtn}/>
+        <Add setMeetings={setMeetings}/>
+      </div>
     </div>
   )
 }

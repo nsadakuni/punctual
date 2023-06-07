@@ -1,25 +1,32 @@
 {
-  "name": "mvp",
+  "name": "punctual",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "client": "npx webpack --watch",
     "server": "npx nodemon --watch server server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch-css": "tailwindcss build -i ./client/src/index.css -o ./client/dist/output.css --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.1",
     "axios": "^1.4.0",
     "babel-cli": "^6.26.0",
     "css-loader": "^6.8.1",
+    "dotenv": "^16.1.4",
     "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "googleapis": "^105.0.0",
+    "http-server": "^14.1.1",
     "mongoose": "^7.2.2",
     "path": "^0.12.7",
+    "postcss-loader": "^7.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "style-loader": "^3.3.3"
+    "style-loader": "^3.3.3",
+    "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.22.1",

@@ -2,12 +2,21 @@ import React from 'react';
 import Meeting from './Meeting.jsx';
 
 const List = ({meetings, deleteBtn}) => {
+  let prev = null;
 
   return (
-    <div>
-      {meetings.map((meeting) => (
-        <Meeting key={meeting._id} meeting={meeting} deleteBtn={deleteBtn}/>
-      ))}
+    <div className='w-1/2'>
+      {meetings.map((meeting) => {
+        const curr = new Date(meeting.startTime).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}).toString();
+        const newDay = curr !== prev;
+        prev = curr;
+        return (
+          <React.Fragment key={meeting._id}>
+            {newDay && <div className='font-bold text-2xl pt-3 mt-3 border-t-2'>{curr}</div>}
+            <Meeting meeting={meeting} deleteBtn={deleteBtn}/>
+          </React.Fragment>
+        )
+      })}
     </div>
   )
 }
