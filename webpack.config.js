@@ -18,7 +18,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -26,4 +26,22 @@ module.exports = {
       },
     ],
   },
+  // resolve: {
+  //   fallback: {
+  //     "assert": false,
+  //     "fs": false,
+  //     "tls": false,
+  //     "net": false,
+  //     "path": false,
+  //     "zlib": false,
+  //     "http": false,
+  //     "https": false,
+  //     "os": false,
+  //     "querystring": false,
+  //     "stream": false,
+  //     "url": false,
+  //     "crypto": false,
+  //     "crypto-browserify": false
+  //   }
+  // },
 }

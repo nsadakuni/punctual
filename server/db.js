@@ -5,7 +5,8 @@ mongoose.connect('mongodb://localhost/punctual')
 const schema = mongoose.Schema({
   title: String,
   url: String,
-  time: Number,
+  startTime: Number,
+  endTime: Number,
   past: {type: Boolean, default: false}
 })
 
