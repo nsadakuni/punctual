@@ -10,19 +10,26 @@ import Clock from './Clock.jsx';
 const App = () => {
   const [meetings, setMeetings] = useState([]);
   const [tminus, setTminus] = useState(60000);
+  const [chimeTime, setChimeTime] = useState(60000);
   const [status, setStatus] = useState(false)
 
   let queue = useRef([]);
+  let chime = new Audio('chime.mp3')
 
   useEffect(() => helpers.getAll(setMeetings), [])
 
   const goBtn = () => {
-    console.log('go')
     setStatus(true)
     let now = Date.now();
     let opened = [];
     for (let i = 0; i < meetings.length; i++) {
       if (!meetings[i].past) {
+        ((i) => {
+          queue.current.push(setTimeout(() => {
+            chime.play()
+          }, meetings[i].startTime - now - tminus - 60000));
+        })(i);
+
         ((i) => {
           queue.current.push(setTimeout(() => {
             opened[i] = (window.open(meetings[i].url));
@@ -40,14 +47,10 @@ const App = () => {
   }
 
   const stopBtn = () => {
-
-    console.log('stop')
     setStatus(false)
     if (!queue.current.length) {
-      console.log('Nothing in queue.')
       return;
     }
-    console.log('Stopping', queue.current)
     for (let i = 0; i < queue.current.length; i++) {
       clearTimeout(queue.current[i]);
     }
@@ -64,16 +67,20 @@ const App = () => {
   return (
     <div className='bg-gray-100'>
       <nav className="grid grid-cols-2 bg-gray-800 text-white px-4 lg:px-6 py-2.5">
-        <h1 className='font-bold text-6xl'>punctual.</h1>
+        <h1 className={`flex self-center justify-self-start font-bold text-6xl ${status && 'animate-pulse'}`}>
+          <img className='self-center object-scale-down h-16 w-16 animate-pulse' src='logo.png'/>
+          punctual.
+        </h1>
         <button className='flex items-center justify-self-end self-center border rounded w-auto h-8 p-2'>Sign in</button>
       </nav>
       <div className='grid grid-cols-2'>
         <div className='flex-col m-2'>
-          <button disabled={status} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2' onClick={() => document.getElementById('addDialog').showModal()}>Add a new meeting</button>
-          <button disabled={status} className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2' onClick={goBtn}>Go</button>
-          <button disabled={!status} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'onClick={stopBtn}>Stop</button>
+          <button disabled={status} className={`text-white font-bold py-2 px-4 rounded mr-2 ${status ? 'bg-blue-200': 'bg-blue-500 hover:bg-blue-700'}`} onClick={() => document.getElementById('addDialog').showModal()}>Add a new meeting</button>
+          <button disabled={status} className={`w-1/6 text-white font-bold py-2 px-4 rounded mr-2 ${status ? 'bg-green-200' : 'bg-green-500 hover:bg-green-700'}`} onClick={goBtn}>Go</button>
+          <button disabled={!status} className={`w-1/6 text-white font-bold py-2 px-4 rounded ${status ? 'bg-red-500 hover:bg-red-700' : 'bg-red-200'}`} onClick={stopBtn}>Stop</button>
           <div className='pt-1 pb-2'>
-            <input className='text-gray-700 border-2 text-sm rounded p-2 w-1/2' type='number' min='0' placeholder='Set number of minutes before auto-join' onChange={(e) => setTminus(e.target.value*60000)}/>
+            <input className='text-gray-700 border-2 text-sm rounded p-2 w-1/3' type='number' min='0' placeholder='#minutes before auto-join' onChange={(e) => setTminus(e.target.value*60000)}/>
+            <input className='text-gray-700 border-2 text-sm rounded p-2 w-1/3' type='number' min='0' placeholder='#minutes before notification' onChange={(e) => setChimeTime(e.target.value*60000)}/>
           </div>
           <List meetings={meetings} deleteBtn={deleteBtn}/>
           <Add setMeetings={setMeetings}/>
