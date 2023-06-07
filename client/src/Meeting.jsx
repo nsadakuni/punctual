@@ -13,7 +13,7 @@ const Meeting = ({meeting, deleteBtn}) => {
   }).toString();
 
   return (
-    <div className={`grid grid-cols-3 gap-2  ${meeting.past ? 'pastMeeting' : 'futureMeeting'}`}>
+    <div className={`grid grid-cols-3 gap-2  ${meeting.past && 'text-gray-400'}`}>
       <div className='font-semibold col-span-1'>
         &#x2022; {meeting.title}
       </div>

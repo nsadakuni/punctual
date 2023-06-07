@@ -1,7 +1,7 @@
 const db = require('./db.js')
 
 const get = () => {
-  return db.find();
+  return db.find().sort({startTime: 1});
 }
 
 const post = (meeting) => {

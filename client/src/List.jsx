@@ -5,7 +5,7 @@ const List = ({meetings, deleteBtn}) => {
   let prev = null;
 
   return (
-    <div className='w-1/2'>
+    <div className='w-full'>
       {meetings.map((meeting) => {
         const curr = new Date(meeting.startTime).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}).toString();
         const newDay = curr !== prev;
