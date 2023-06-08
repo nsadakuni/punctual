@@ -6,7 +6,7 @@ const List = ({meetings, setMeetings, form, setForm}) => {
 
   return (
     <div className='w-full'>
-      {meetings.map((meeting) => {
+      {meetings.length ? meetings.map((meeting) => {
         const curr = new Date(meeting.startTime).toLocaleDateString('en-US', {month: 'long', day: 'numeric'}).toString();
         const newDay = curr !== prev;
         prev = curr;
@@ -16,7 +16,7 @@ const List = ({meetings, setMeetings, form, setForm}) => {
             <Meeting meeting={meeting} setMeetings={setMeetings} form={form} setForm={setForm}/>
           </React.Fragment>
         )
-      })}
+      }) : <div className='font-bold text-2xl'>Nothing scheduled. Start adding meetings!</div>}
     </div>
   )
 }

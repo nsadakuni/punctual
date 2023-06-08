@@ -10,6 +10,12 @@ const schema = mongoose.Schema({
   past: {type: Boolean, default: false}
 })
 
-const db = mongoose.model('punctual', schema)
+const todoSchema = mongoose.Schema({
+  item: String,
+  done: {type: Boolean, default: false}
+})
 
-module.exports = db
+const meet = mongoose.model('punctual', schema)
+const task = mongoose.model('todo', todoSchema)
+
+module.exports = {meet, task}

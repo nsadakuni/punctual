@@ -30,15 +30,14 @@ const Clock = ({ meetings, setMeetings, chimeTime }) => {
     const sec = Math.floor(time / 1000) % 60;
     const min = Math.floor(time / 1000 / 60) % 60;
     const hr = Math.floor(time / 1000 / 60 / 60);
-
     return `${hr.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
   };
 
   return (
     <div>
-      {count === null ? <div>No upcoming meetings</div> :
-        <div className='grid grid-cols-2 gap-5'>
-          <div className='flex-col'>
+      {count === null ? <div className='text-4xl'>No upcoming meetings</div> :
+        <div className='grid grid-cols-3 gap-5'>
+          <div className='flex-col col-span-2'>
             <div className='text-4xl'>Next meeting</div>
             <div className='text-xl break-all'>{nextUp && nextUp.title}</div>
           </div>

@@ -2,31 +2,42 @@ const db = require('./db.js')
 const mongoose = require('mongoose')
 
 const get = () => {
-  return db.find().sort({startTime: 1});
+  return db.meet.find().sort({startTime: 1});
 }
 
 const post = (meeting) => {
   if (!meeting._id) {
     meeting._id = new mongoose.Types.ObjectId();
   }
-  console.log(meeting._id)
-  return db.updateOne({_id: meeting._id}, {$set: meeting}, {upsert:true});
+  return db.meet.updateOne({_id: meeting._id}, {$set: meeting}, {upsert:true});
 }
 
 const postMany = (meetings) => {
-  return db.insertMany(meetings);
+  return db.meet.insertMany(meetings);
 }
 
 const patch = (meeting) => {
-  return db.updateOne(meeting, {past: true});
-}
-
-const edit = (meeting, params) => {
-  return db.updateOne(meeting, params)
+  return db.meet.updateOne(meeting, {past: true});
 }
 
 const remove = ({meeting}) => {
-  return db.deleteOne({_id: meeting});
+  return db.meet.deleteOne({_id: meeting});
 }
 
-module.exports = { get, post, postMany, patch, edit, remove };
+const getTasks = () => {
+  return db.task.find()
+}
+
+const putTask = ({item, done}) => {
+  return db.task.updateOne({item: item}, {done: done})
+}
+
+const postTask = ({newItem}) => {
+  return db.task.create({item: newItem})
+}
+
+const removeTask = (item) => {
+  return db.task.deleteOne(item[0])
+}
+
+module.exports = { get, post, postMany, patch, remove, getTasks, putTask, postTask, removeTask };

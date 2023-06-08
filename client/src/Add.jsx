@@ -32,7 +32,7 @@ const Add = ({setMeetings, form, setForm}) => {
   //min={(new Date()).toISOString().substring(0,16)} make this user timezone
 
   return (
-    <dialog id='addDialog' className='w-1/3 p-0 shadow-2xl'>
+    <dialog id='addDialog' className='w-1/3 p-0 shadow-2xl transition ease-in-out delay-150'>
       <form id='addForm' className='grid grid-cols-2 gap-y-4 rounded-md bg-gray-800 text-white p-4' onSubmit={(e) => submit(e)} onChange={(e) => changeHandler(e)}>
         <div className='grid col-span-2'>
           <label htmlFor='meeting-name'>Meeting Name</label>
@@ -51,7 +51,7 @@ const Add = ({setMeetings, form, setForm}) => {
           <input id='meeting-end' className='border border-gray-600 bg-gray-800 text-white rounded dark:text-white dark:[color-scheme:dark]' type='datetime-local' name='endTime' required/>
         </div>
         <div className='flex justify-evenly col-end-3 col-span-1 gap-1'>
-          <button className='border border-green-500 w-1/2 rounded' type='submit'>Submit</button>
+          <button className='border border-green-500 w-1/2 rounded' type='submit'>Add</button>
           <button className='border border-gray-500 w-1/2 rounded' onClick={(e) => cancel(e)}>Cancel</button>
         </div>
       </form>

@@ -41,10 +41,10 @@ const Meeting = ({meeting, setMeetings, form, setForm}) => {
       <div className={`pl-10 ${meeting.past && 'text-gray-400'}`}>
         {startTime} - {endTime}
       </div>
-      <div className='flex'>
-        <button>Archive</button>
-        <button className='flex items-center justify-self-end h-6 w-20 m-1 text-sm bg-transparent hover:bg-yellow-500 text-black-500 hover:text-white py-2 px-4 border border-yellow-500 hover:border-transparent rounded' onClick={() => editBtn()}>Edit</button>
-        <button className='flex items-center justify-self-end h-6 w-20 m-1 text-sm bg-transparent hover:bg-red-500 text-black-500 hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded' onClick={() => deleteBtn(meeting._id)}>Delete</button>
+      <div className='flex justify-end'>
+        {/* <button>Archive</button> */}
+        <button className='flex items-center justify-center h-6 w-6 m-1 text-sm bg-transparent hpy-2 px-4 hover:text-lg' onClick={() => editBtn()}>&#128221;</button>
+        <button className='flex items-center justify-center h-6 w-6 m-1 text-sm bg-transparent py-2 px-4 hover:text-lg' onClick={() => deleteBtn(meeting._id)}>&#128465;</button>
         </div>
     </div>
   )
