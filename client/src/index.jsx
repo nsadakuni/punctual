@@ -28,6 +28,7 @@ const App = () => {
       if (!meetings[i].past) {
         ((i) => {
           queue.current.push(setTimeout(() => {
+            console.log(meetings[i].url)
             chime.play()
           }, meetings[i].startTime - now  - chimeTime));
         })(i);

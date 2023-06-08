@@ -7,6 +7,7 @@ const get = () => {
 
 const post = (meeting) => {
   if (!meeting._id) {
+    console.log(meeting)
     meeting._id = new mongoose.Types.ObjectId();
   }
   return db.meet.updateOne({_id: meeting._id}, {$set: meeting}, {upsert:true});

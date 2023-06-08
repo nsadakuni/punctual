@@ -5,11 +5,12 @@ import helpers from './helpers.jsx';
 const Add = ({setMeetings, form, setForm}) => {
   const submit = (e) => {
     e.preventDefault();
-    document.getElementById('addDialog').close();
-    document.getElementById('addForm').reset()
     helpers.post(form)
     helpers.getAll(setMeetings)
     setForm({})
+    document.getElementById('addDialog').close();
+    document.getElementById('addForm').reset()
+    document.getElementById('meeting-url').value = ''
   }
 
   const cancel = (e) => {
@@ -17,6 +18,7 @@ const Add = ({setMeetings, form, setForm}) => {
     setForm({})
     document.getElementById('addDialog').close();
     document.getElementById('addForm').reset();
+    document.getElementById('meeting-url').value = ''
   }
 
   const changeHandler = (e) => {
